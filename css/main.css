@@ -1,0 +1,40 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.calcFrame {
+  background-color: blue;
+  width: 400px;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.calcFrame .display {
+  height: 100px;
+  width: 90%;
+  background-color: darkolivegreen;
+  margin: 15px;
+}
+.calcFrame .buttons {
+  height: 380px;
+  width: 380px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  background-color: blue;
+  gap: 10px;
+  grid-template-areas: "seven eight nine divide" "four five six mult" "one two three sub" "zero clear equals add";
+}
+.calcFrame .buttons div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+  border-radius: 5px;
+}/*# sourceMappingURL=main.css.map */

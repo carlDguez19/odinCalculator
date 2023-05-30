@@ -1,16 +1,10 @@
-let add = (a, b) => {
-    return a+b;
-}
-let sub = (a, b) => {
-    return a-b;
-}
-let mult = (a, b) => {
-    return a*b;
-}
-let div = (a, b) => {
-    return a/b;
-}
+let fn = "";
+let sn = "";
+let op = "";
+let lastPress = "";
+const numRegex = /[0-9]/;
+const symbolRegex = /[+*.-]/;
 
-let firstNum = 0;
-let secondNum = 0;
-let operator = "+";
+const createCalc = () => {
+    
+};
