@@ -29,7 +29,6 @@ body {
   grid-template-rows: repeat(4, 1fr);
   background-color: blue;
   gap: 10px;
-  grid-template-areas: "seven eight nine divide" "four five six mult" "one two three sub" "zero clear equals add";
 }
 .calcFrame .buttons div {
   display: flex;
