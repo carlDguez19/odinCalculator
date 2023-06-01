@@ -9,7 +9,7 @@
     <!-- links -->
     <!-- might add font later... especially for the display on the calculator -->
     <link rel="stylesheet" href="/css/main.css">
-    <script src="/js/script.js defer"></script>
+    <script src="/js/script.js" defer></script>
 </head>
 <body>
     <div class="header">
@@ -18,28 +18,27 @@
     <span class="calcFrame">
         <span class="display"></span>
         <!-- insert buttons -->
-        <span class="buttons">
+        <span class="buttonFrame">
             <!-- fourth row -->
-            <div class="seven">7</div>
-            <div class="eight">8</div>
-            <div class="nine">9</div>
-            <div class="divide">/</div>
+            <div class="seven" data-value = "7">7</div>
+            <div class="eight" data-value = "8">8</div>
+            <div class="nine" data-value = "9">9</div>
+            <div class="divide" data-value = "/">/</div>
             <!-- third row -->
-            <div class="four">4</div>
-            <div class="five">5</div>
-            <div class="six">6</div>
-            <div class="mult">x</div>
+            <div class="four" data-value = "4">4</div>
+            <div class="five" data-value = "5">5</div>
+            <div class="six" data-value = "6">6</div>
+            <div class="mult" data-value = "*">x</div>
             <!-- second row -->
-            <div class="one">1</div>
-            <div class="two">2</div>
-            <div class="three">3</div>
-            <div class="sub">-</div>
-
+            <div class="one" data-value = "1">1</div>
+            <div class="two" data-value = "2">2</div>
+            <div class="three" data-value = "3">3</div>
+            <div class="sub" data-value = "-">-</div>
             <!-- first row -->
-            <div class="zero">0</div>
-            <div class="equals">=</div>
-            <div class="clear">ca</div>
-            <div class="add">+</div>
+            <div class="zero" data-value = "0">0</div>
+            <div class="equals" data-value = "=">=</div>
+            <div class="clear" data-value = "c">ca</div>
+            <div class="add" data-value = "+">+</div>
         </span><!--end buttons span-->
     </span><!--end calcFrame-->
 </body>

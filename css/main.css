@@ -21,7 +21,7 @@ body {
   background-color: darkolivegreen;
   margin: 15px;
 }
-.calcFrame .buttons {
+.calcFrame .buttonFrame {
   height: 380px;
   width: 380px;
   display: grid;
@@ -30,7 +30,7 @@ body {
   background-color: blue;
   gap: 10px;
 }
-.calcFrame .buttons div {
+.calcFrame .buttonFrame div {
   display: flex;
   justify-content: center;
   align-items: center;
