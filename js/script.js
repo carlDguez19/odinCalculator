@@ -5,7 +5,7 @@ let lastPress = "";
 let fnCheck =  false;
 // const numRegex = '/^\d+$/'; this will be used as a last resort
 // const symbolRegex = /[+*.-]/;
-fn = "9"  "2";
+fn = "9" + "2";
 // fn += "b";
 // fn += "pleb";
 console.log(fn);
@@ -25,11 +25,32 @@ function execCalc() {//event delegation to determine button clicked
             }
             else{
                 console.log("its a symbul eeee");
+                determineSymbolFill(e.target.dataset.value);
                 //here i will determine if it is the first symbol that is clicked or the second, third, etc.
             }
         }
     })
 };
+
+function equals(){
+
+}
+
+function determineSymbolFill(sym){
+    if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
+        op = sym;
+        fnCheck = true;
+        lastPress = "sym";
+        //insert display function(append to display "screen")
+    }
+    else if(op && !isNaN(lastPress)){//chained operation eg 1+2*3-4/5
+        op = sym;
+        equals();
+        fnCheck = true;
+        lastPress = "sym";
+        //insert display function(append to display "screen")
+    }
+}
 
 function determineNumberFill(num){
     if(fnCheck == true){
