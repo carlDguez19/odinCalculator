@@ -78,15 +78,20 @@ function clearCalc(){
 }
 
 function determineSymbolFill(sym){
-    if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
+    //if sym === 'c' should be the very first if statement everything else should be else if
+    if(sym === "c"){
+        console.log(sym);
+        clearCalc();
+    }
+    else if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
         op = sym;
         console.log(op);
         fnCheck = true;
         lastPress = "sym";
         //insert display function(append to display "screen")
     }
-    else if(op && !isNaN(lastPress)){//chained operation eg 1+2*3-4/5
-        if(sym === "=" || sym === "c"){
+    else if(op && !isNaN(lastPress)){//chained operation eg 1+2*3-4/5 clear has be able to be called after another symbol
+        if(sym === "="){//this else if wont work for clear ie 'c'
             console.log(`${sym} in the right direction`);
             equals();
             clearCalc();
