@@ -58,6 +58,14 @@ function equals(){
             console.log(fn);
             //display fn as current and append to full arithFunc to display on top left
             break;
+        case "c":
+            console.log("symbol is 'c'");
+            break;
+        case "=":
+            console.log("symbol is '='");
+            break;
+        default:
+            console.log("random");
     }
 }
 
@@ -78,7 +86,8 @@ function determineSymbolFill(sym){
         //insert display function(append to display "screen")
     }
     else if(op && !isNaN(lastPress)){//chained operation eg 1+2*3-4/5
-        if(op === "=" || op === "c"){
+        if(sym === "=" || sym === "c"){
+            console.log(`${sym} in the right direction`);
             equals();
             clearCalc();
             //display full arithmetic function with result
@@ -86,6 +95,7 @@ function determineSymbolFill(sym){
         else{
             equals();
             op = sym;
+            console.log(op);
             fnCheck = true;
             lastPress = "sym";
             //insert display function(append to display "screen")
