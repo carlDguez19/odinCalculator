@@ -2,6 +2,7 @@ let fn = "";
 let sn = "";
 let op = "";
 let wholeFunc = "";
+let currentNum = "";
 let lastPress = "";
 let fnCheck =  false;
 // const numRegex = '/^\d+$/'; this will be used as a last resort
@@ -68,6 +69,10 @@ function clearCalc(){
     op = "";
     fn = "";
     sn = "";
+    wholeFunc = "";
+    currentNum = "";
+    displayWhole();
+    displayCurrent();
 }
 
 function determineSymbolFill(sym){
@@ -80,6 +85,7 @@ function determineSymbolFill(sym){
     else if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
         op = sym;
         wholeFunc += sym;
+        currentNum = "";
         displayWhole();
         console.log(op);
         fnCheck = true;
@@ -89,16 +95,20 @@ function determineSymbolFill(sym){
     else if(op && !isNaN(lastPress)){//chained operation eg 1+2*3-4/5 clear has be able to be called after another symbol
         if(sym === "="){//this else if wont work for clear ie 'c'
             console.log(`${sym} in the right direction`);
-            equals();
-            clearCalc();
-            wholeFunc = "";
+            equals();//you do NOT clear calculator..you need to see the result
+            wholeFunc += "=";
+            currentNum = fn;
+            displayWhole();
+            displayCurrent();
             //display full arithmetic function with result
         }
         else{
             //second symbol then clear wholeFunc and set append fn to 'new' fn
             equals();
             op = sym;
+            currentNum = "";
             updateShortenFunc();
+            displayCurrent();
             displayWhole();
             console.log(op);
             fnCheck = true;
@@ -106,6 +116,11 @@ function determineSymbolFill(sym){
             //insert display function(append to display "screen")
         }
     }
+}
+
+function displayCurrent(){
+    let currDisp = document.querySelector(".current");
+    currDisp.textContent = currentNum;
 }
 
 function updateShortenFunc(){
@@ -123,7 +138,9 @@ function determineNumberFill(num){
     if(fnCheck == true){
         sn += num.toString();
         wholeFunc += num.toString();
+        currentNum += num.toString();
         displayWhole();//this will display whole function
+        displayCurrent();
         lastPress = num;
         console.log(sn);
 
@@ -131,7 +148,9 @@ function determineNumberFill(num){
     else{
         fn += num.toString();
         wholeFunc += num.toString();
+        currentNum += num.toString();
         displayWhole();
+        displayCurrent();
         lastPress = num;
         console.log(fn);
     }
