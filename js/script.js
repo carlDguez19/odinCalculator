@@ -5,6 +5,7 @@ let wholeFunc = "";
 let currentNum = "";
 let lastPress = "";
 let fnCheck =  false;
+const numbr = 2;
 // const numRegex = '/^\d+$/'; this will be used as a last resort
 // const symbolRegex = /[+*.-]/;
 // fn = +fn + +sn;//testing unary operator
@@ -56,11 +57,20 @@ function equals(){
             break;
         case "/":
             fn = fn / sn;
+            if(isDecimal(fn)){
+                fn = fn.toFixed(2);
+            }
             sn = "";
             console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
             break;
+        case "=":
+
     }
+}
+
+function isDecimal(num){
+    return (num%1);
 }
 
 function clearCalc(){
@@ -82,6 +92,16 @@ function determineSymbolFill(sym){
         wholeFunc = "";
         clearCalc();
     }
+    else if(op === "="){
+        //enter to do operation after pressing equals sign
+        op = sym;
+        wholeFunc += sym;
+        currentNum = "";
+        displayWhole();
+        console.log(op);
+        fnCheck = true;
+        lastPress = "sym";
+    }
     else if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
         op = sym;
         wholeFunc += sym;
@@ -93,28 +113,30 @@ function determineSymbolFill(sym){
         //insert display function(append to display "screen")
     }
     else if(op && !isNaN(lastPress)){//chained operation eg 1+2*3-4/5 clear has be able to be called after another symbol
-        if(sym === "="){//this else if wont work for clear ie 'c'
-            console.log(`${sym} in the right direction`);
-            equals();//you do NOT clear calculator..you need to see the result
-            wholeFunc += "=";
-            currentNum = fn;
-            displayWhole();
-            displayCurrent();
-            //display full arithmetic function with result
-        }
-        else{
-            //second symbol then clear wholeFunc and set append fn to 'new' fn
-            equals();
-            op = sym;
-            currentNum = "";
-            updateShortenFunc();
-            displayCurrent();
-            displayWhole();
-            console.log(op);
-            fnCheck = true;
-            lastPress = "sym";
-            //insert display function(append to display "screen")
-        }
+        // if(sym === "="){//this else if wont work for clear ie 'c'
+        //     console.log(`${sym} in the right direction`);
+        //     equals();//you do NOT clear calculator..you need to see the result
+        //     wholeFunc += "=";
+        //     currentNum = fn;
+        //     displayWhole();
+        //     displayCurrent();
+        //     //display full arithmetic function with result
+        // }
+        //else{
+        //tab after this
+        //second symbol then clear wholeFunc and set append fn to 'new' fn
+        equals();
+        op = sym;
+        currentNum = fn;
+        updateShortenFunc();
+        displayCurrent();
+        displayWhole();
+        console.log(op);
+        fnCheck = true;
+        lastPress = "sym";
+        currentNum = "";
+        //insert display function(append to display "screen")
+        //}
     }
 }
 
@@ -126,7 +148,9 @@ function displayCurrent(){
 function updateShortenFunc(){
     wholeFunc = "";
     wholeFunc += fn;
-    wholeFunc += op;
+    if(op != "="){
+        wholeFunc += op;
+    }
 }
 
 function displayWhole(){
