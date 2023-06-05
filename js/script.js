@@ -1,6 +1,7 @@
 let fn = "";
 let sn = "";
 let op = "";
+let wholeFunc = "";
 let lastPress = "";
 let fnCheck =  false;
 // const numRegex = '/^\d+$/'; this will be used as a last resort
@@ -37,35 +38,27 @@ function equals(){
         case "+":
             fn = +fn + +sn;//unary operator to do addition
             sn = "";
-            console.log(fn);
+            console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
             break;
         case "-":
             fn = fn - sn;
             sn = "";
-            console.log(fn);
+            console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
             break;
         case "*":
             fn = fn * sn;
             sn = "";
-            console.log(fn);
+            console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
             break;
         case "/":
             fn = fn / sn;
             sn = "";
-            console.log(fn);
+            console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
             break;
-        case "c":
-            console.log("symbol is 'c'");
-            break;
-        case "=":
-            console.log("symbol is '='");
-            break;
-        default:
-            console.log("random");
     }
 }
 
@@ -81,10 +74,13 @@ function determineSymbolFill(sym){
     //if sym === 'c' should be the very first if statement everything else should be else if
     if(sym === "c"){
         console.log(sym);
+        wholeFunc = "";
         clearCalc();
     }
     else if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
         op = sym;
+        wholeFunc += sym;
+        displayWhole();
         console.log(op);
         fnCheck = true;
         lastPress = "sym";
@@ -95,11 +91,15 @@ function determineSymbolFill(sym){
             console.log(`${sym} in the right direction`);
             equals();
             clearCalc();
+            wholeFunc = "";
             //display full arithmetic function with result
         }
         else{
+            //second symbol then clear wholeFunc and set append fn to 'new' fn
             equals();
             op = sym;
+            updateShortenFunc();
+            displayWhole();
             console.log(op);
             fnCheck = true;
             lastPress = "sym";
@@ -108,14 +108,30 @@ function determineSymbolFill(sym){
     }
 }
 
+function updateShortenFunc(){
+    wholeFunc = "";
+    wholeFunc += fn;
+    wholeFunc += op;
+}
+
+function displayWhole(){
+    let wfunc = document.querySelector(".wholeFunction");
+    wfunc.textContent = wholeFunc;
+}
+
 function determineNumberFill(num){
     if(fnCheck == true){
         sn += num.toString();
+        wholeFunc += num.toString();
+        displayWhole();//this will display whole function
         lastPress = num;
         console.log(sn);
+
     }
     else{
         fn += num.toString();
+        wholeFunc += num.toString();
+        displayWhole();
         lastPress = num;
         console.log(fn);
     }

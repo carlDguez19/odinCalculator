@@ -21,6 +21,21 @@ body {
   background-color: darkolivegreen;
   margin: 15px;
 }
+.calcFrame .display .wholeFunction {
+  background-color: purple;
+  height: 50px;
+  width: 100%;
+  font-size: 35px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+.calcFrame .display .current {
+  height: 50px;
+  font-size: 50px;
+  font-family: sans-serif;
+  font-weight: bold;
+  float: right;
+}
 .calcFrame .buttonFrame {
   height: 380px;
   width: 380px;
@@ -36,4 +51,5 @@ body {
   align-items: center;
   background-color: aqua;
   border-radius: 5px;
+  cursor: pointer;
 }/*# sourceMappingURL=main.css.map */

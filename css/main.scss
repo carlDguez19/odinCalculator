@@ -15,10 +15,25 @@ body{
     justify-content: center;
     gap: 5px;
     .display{
-        height: 100px;
+        height: 100px;//100px
         width: 90%;
         background-color: darkolivegreen;
         margin: 15px;
+        .wholeFunction{
+            background-color: purple;
+            height: 50px;//50px
+            width: 100%;
+            font-size: 35px;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+        .current{
+            height: 50px;
+            font-size: 50px;
+            font-family: sans-serif;
+            font-weight: bold;
+            float: right;
+        }
     }
     .buttonFrame{
         height: 380px;
@@ -34,6 +49,7 @@ body{
             align-items: center;
             background-color: aqua;
             border-radius: 5px;
+            cursor: pointer;
 
         }
     }
