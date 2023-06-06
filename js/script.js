@@ -94,23 +94,40 @@ function determineSymbolFill(sym){
     }
     else if(op === "="){
         //enter to do operation after pressing equals sign
-        op = sym;
-        wholeFunc += sym;
-        currentNum = "";
-        displayWhole();
-        console.log(op);
-        fnCheck = true;
-        lastPress = "sym";
+        if(sym === "="){//if we try to press = after it was just pressed
+            clearCalc();
+            currentNum = "ERR";
+            displayCurrent();
+            wholeFunc = "SyntaxError";
+            displayWhole();
+        }else{
+            op = sym;
+            wholeFunc += sym;
+            currentNum = "";
+            displayWhole();
+            console.log(op);
+            fnCheck = true;
+            lastPress = "sym";
+        }
     }
     else if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
-        op = sym;
-        wholeFunc += sym;
-        currentNum = "";
-        displayWhole();
-        console.log(op);
-        fnCheck = true;
-        lastPress = "sym";
-        //insert display function(append to display "screen")
+        if(sym === "="){//if no operator has been chosen first 'operator' cannot be '='
+            clearCalc();
+            currentNum = "ERR";
+            displayCurrent();
+            wholeFunc = "SyntaxError";
+            displayWhole();
+        }
+        else{
+            op = sym;
+            wholeFunc += sym;
+            currentNum = "";
+            displayWhole();
+            console.log(op);
+            fnCheck = true;
+            lastPress = "sym";
+            //insert display function(append to display "screen")
+        }
     }
     else if(op && !isNaN(lastPress)){//chained operation eg 1+2*3-4/5 clear has be able to be called after another symbol
         // if(sym === "="){//this else if wont work for clear ie 'c'
