@@ -95,12 +95,8 @@ function determineSymbolFill(sym){
     else if(op === "="){
         //enter to do operation after pressing equals sign
         if(sym === "="){//if we try to press = after it was just pressed
-            clearCalc();
-            currentNum = "ERR";
-            displayCurrent();
-            wholeFunc = "SyntaxError";
-            displayWhole();
-        }else{
+            displayError();
+        }else{//the code below can be placed in a function and used for the bottom piece of code
             op = sym;
             wholeFunc += sym;
             currentNum = "";
@@ -112,13 +108,9 @@ function determineSymbolFill(sym){
     }
     else if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
         if(sym === "="){//if no operator has been chosen first 'operator' cannot be '='
-            clearCalc();
-            currentNum = "ERR";
-            displayCurrent();
-            wholeFunc = "SyntaxError";
-            displayWhole();
+            displayError();
         }
-        else{
+        else{//the code below can be placed in a function and used for the top piece of code
             op = sym;
             wholeFunc += sym;
             currentNum = "";
@@ -157,6 +149,14 @@ function determineSymbolFill(sym){
     }
 }
 
+function displayError(){
+    clearCalc();
+    currentNum = "ERR";
+    displayCurrent();
+    wholeFunc = "SyntaxError";
+    displayWhole();
+}
+
 function displayCurrent(){
     let currDisp = document.querySelector(".current");
     currDisp.textContent = currentNum;
@@ -187,13 +187,18 @@ function determineNumberFill(num){
 
     }
     else{
-        fn += num.toString();
-        wholeFunc += num.toString();
-        currentNum += num.toString();
-        displayWhole();
-        displayCurrent();
-        lastPress = num;
-        console.log(fn);
+        if(wholeFunc === "SyntaxError"){
+            displayError();
+        }
+        else{
+            fn += num.toString();
+            wholeFunc += num.toString();
+            currentNum += num.toString();
+            displayWhole();
+            displayCurrent();
+            lastPress = num;
+            console.log(fn);
+        }
     }
     // if(fn === ""){
     //     fn = num;
