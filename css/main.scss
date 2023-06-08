@@ -7,7 +7,7 @@ body{
 
 .calcFrame{
     background-color: blue;
-    width: 400px;
+    min-width: 400px;//400px;
     height: 550px;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@ body{
         width: 380px;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(4, 1fr);
+        grid-template-rows: repeat(5, 1fr);
         background-color: blue;
         gap: 10px;
         div{

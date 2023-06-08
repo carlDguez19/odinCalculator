@@ -83,6 +83,9 @@ function determineSymbolFill(sym){
         if(wholeFunc === "SyntaxError"){//this should let the division by zero error message stay displayed on the screen
             displayError();
         }
+        else if(wholeFunc === "ReallyBigNum"){
+            displayBigNumber();
+        }
         else{
             op = sym;
             currentNum = fn;
@@ -100,7 +103,7 @@ function determineSymbolFill(sym){
 }
 
 function determineNumberFill(num){
-    if(equalsJustCalled == true){
+    if(equalsJustCalled == true){//if user presses number right after pressing equals it clears calc and starts new operation
         clearCalc();
         equalsJustCalled = false;
     }
@@ -149,18 +152,21 @@ function equals(){
         case "+":
             fn = +fn + +sn;//unary operator to do addition
             sn = "";
+            decimalOrBigNum();
             console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
             break;
         case "-":
             fn = fn - sn;
             sn = "";
+            decimalOrBigNum();
             console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
             break;
         case "*":
             fn = fn * sn;
             sn = "";
+            decimalOrBigNum();
             console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
             break;
@@ -169,9 +175,7 @@ function equals(){
             if(sn == "0"){
                 displayError();
             }
-            else if(isDecimal(fn)){
-                fn = +fn.toFixed(2);
-            }
+            decimalOrBigNum();
             sn = "";
             console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
@@ -181,6 +185,18 @@ function equals(){
 
 function isDecimal(num){
     return (num%1);
+}
+
+function decimalOrBigNum(){
+    if(isDecimal(fn)){
+        fn = +fn.toFixed(2);
+        if(fn >= 9999999999){
+            displayBigNumber();
+        }
+    }
+    else if(fn >= 999999999999){
+        displayBigNumber();
+    }
 }
 
 function clearCalc(){
@@ -202,6 +218,14 @@ function displayError(){
     currentNum = "ERR";
     displayCurrent();
     wholeFunc = "SyntaxError";
+    displayWhole();
+}
+
+function displayBigNumber(){
+    clearCalc();
+    currentNum = "BigNumber";
+    displayCurrent();
+    wholeFunc = "ReallyBigNum";
     displayWhole();
 }
 
