@@ -16,7 +16,7 @@ body {
   gap: 5px;
 }
 .calcFrame .display {
-  height: 100px;
+  height: 120px;
   width: 90%;
   background-color: darkolivegreen;
   margin: 15px;
@@ -29,6 +29,7 @@ body {
   font-weight: bold;
 }
 .calcFrame .display .current {
+  margin: 10px;
   height: 50px;
   font-size: 50px;
   font-family: sans-serif;

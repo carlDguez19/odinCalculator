@@ -39,6 +39,7 @@ function execCalc() {//event delegation to determine button clicked
 
 function determineSymbolFill(sym){
     //if sym === 'c' should be the very first if statement everything else should be else if
+    equalsJustCalled = false;
     if(sym === "c"){
         console.log(sym);
         wholeFunc = "";
@@ -177,6 +178,13 @@ function equals(){
             }
             decimalOrBigNum();
             sn = "";
+            console.log(fn);//current to be displayed
+            //display fn as current and append to full arithFunc to display on top left
+            break;
+        case "^":
+            fn = fn ** sn;
+            sn = "";
+            decimalOrBigNum();
             console.log(fn);//current to be displayed
             //display fn as current and append to full arithFunc to display on top left
             break;
