@@ -7,6 +7,7 @@ let lastPress = "~";
 let fnCheck =  false;
 let fnDotCheck = false;
 let snDotCheck = false;
+let equalsJustCalled = false;
 // const numRegex = '/^\d+$/'; this will be used as a last resort
 // const symbolRegex = /[+*.-]/;
 // fn = +fn + +sn;//testing unary operator
@@ -99,6 +100,10 @@ function determineSymbolFill(sym){
 }
 
 function determineNumberFill(num){
+    if(equalsJustCalled == true){
+        clearCalc();
+        equalsJustCalled = false;
+    }
     if(fnCheck == true){
         if((lastPress == "." && num == ".")|| (snDotCheck && num == ".")){//wont allow consecutive '.' presses
             displayError();
@@ -139,6 +144,7 @@ function determineNumberFill(num){
 };
 
 function equals(){
+    equalsJustCalled = true;
     switch(op){
         case "+":
             fn = +fn + +sn;//unary operator to do addition
