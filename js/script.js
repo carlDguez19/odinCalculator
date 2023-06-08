@@ -60,6 +60,9 @@ function determineSymbolFill(sym){
         }
     }
     else if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
+        //if(wholeFunc === "ReallyBigNum"){displayBigNum()}
+        //else if(wholeFunc === "SyntaxError"){displayError()}
+        //VVV that if becomes else if
         if(sym === "="){//if no operator has been chosen first 'operator' cannot be '='
             displayError();
         }
@@ -197,6 +200,7 @@ function isDecimal(num){
 }
 
 function decimalOrBigNum(){
+    snDotCheck = false;
     if(isDecimal(fn)){
         fn = +fn.toFixed(2);
         if(fn >= 9999999999){
