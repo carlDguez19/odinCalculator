@@ -6,6 +6,7 @@ let currentNum = "";
 let lastPress = "~";
 let fnCheck =  false;
 let fnDotCheck = false;
+let snDotCheck = false;
 // const numRegex = '/^\d+$/'; this will be used as a last resort
 // const symbolRegex = /[+*.-]/;
 // fn = +fn + +sn;//testing unary operator
@@ -42,31 +43,6 @@ function determineSymbolFill(sym){
         wholeFunc = "";
         clearCalc();
     }
-    // else if(sym === "."){
-    //     if(op === "."){
-    //         displayError();
-    //         op = sym;
-    //     }
-    //     else if(fnDotCheck == false && !isNaN(lastPress)){
-    //         op = sym;
-    //         lastPress = "sym";
-    //         fn += ".";
-    //         wholeFunc += ".";
-    //         currentNum += ".";
-    //         displayWhole();
-    //         displayCurrent();
-    //         fnDotCheck = true;
-    //     }
-    //     else if(fnDotCheck == true && !isNaN(lastPress)){
-    //         op = sym;
-    //         lastPress = "sym";
-    //         sn += ".";
-    //         wholeFunc += ".";
-    //         currentNum += ".";
-    //         displayWhole();
-    //         displayCurrent();
-    //     }
-    // }
     else if(op === "="){//doing operations after pressing = without clearing calc
         //enter to do operation after pressing equals sign
         if(sym === "="){//if we try to press = after it was just pressed
@@ -100,37 +76,60 @@ function determineSymbolFill(sym){
         //else{
         //second symbol then clear wholeFunc and set append fn to 'new' fn
         equals();
-        op = sym;
-        currentNum = fn;
-        updateShortenFunc();
-        displayCurrent();
-        displayWhole();
-        console.log(op);
-        fnCheck = true;
-        lastPress = "sym";
-        currentNum = "";
-        //insert display function(append to display "screen")
-        //}
+        if(fn == NaN){//handle any weird error
+            displayError();
+        }
+        if(wholeFunc === "SyntaxError"){//this should let the division by zero error message stay displayed on the screen
+            displayError();
+        }
+        else{
+            op = sym;
+            currentNum = fn;
+            updateShortenFunc();
+            displayCurrent();
+            displayWhole();
+            console.log(op);
+            fnCheck = true;
+            lastPress = "sym";
+            currentNum = "";
+            //insert display function(append to display "screen")
+            //}
+        }
     }
 }
 
 function determineNumberFill(num){
     if(fnCheck == true){
-        sn += num.toString();
-        displayNumToString(num);
-        lastPress = num;
-        console.log(sn);
-
-    }
-    else{
-        if(wholeFunc === "SyntaxError"){
+        if((lastPress == "." && num == ".")|| (snDotCheck && num == ".")){//wont allow consecutive '.' presses
             displayError();
         }
         else{
-            fn += num.toString();
+            if(num == "."){
+                snDotCheck = true;
+            }
+            sn += num.toString();
             displayNumToString(num);
             lastPress = num;
-            console.log(fn);
+            console.log(sn);
+        }
+    }
+    else{
+        if(wholeFunc === "SyntaxError"){//if theres an error dont let calculator add numbers on top of error messages
+            displayError();
+        }
+        else{
+            if((lastPress == "." && num == ".")|| (fnDotCheck && num == ".")){
+                displayError();
+            }
+            else{
+                if(num == "."){
+                    fnDotCheck = true;
+                }
+                fn += num.toString();
+                displayNumToString(num);
+                lastPress = num;
+                console.log(fn);
+            }
         }
     }
     // if(fn === ""){
@@ -161,8 +160,11 @@ function equals(){
             break;
         case "/":
             fn = fn / sn;
-            if(isDecimal(fn)){
-                fn = fn.toFixed(2);
+            if(sn == "0"){
+                displayError();
+            }
+            else if(isDecimal(fn)){
+                fn = +fn.toFixed(2);
             }
             sn = "";
             console.log(fn);//current to be displayed
@@ -183,6 +185,8 @@ function clearCalc(){
     sn = "";
     wholeFunc = "";
     currentNum = "";
+    fnDotCheck = false;
+    snDotCheck = false;
     displayWhole();
     displayCurrent();
 }
