@@ -91,6 +91,12 @@ function determineSymbolFill(sym){
             displayBigNumber();
         }
         else{
+            if(sym != "="){
+                equalsJustCalled = false;//if sym !== "="
+            }
+            else{
+                equalsJustCalled = true;
+            }
             op = sym;
             currentNum = fn;
             updateShortenFunc();
@@ -100,7 +106,7 @@ function determineSymbolFill(sym){
             fnCheck = true;
             lastPress = "sym";
             currentNum = "";
-            equalsJustCalled = false;
+            equalsJustCalled = false;//if sym !== "="
             //insert display function(append to display "screen")
             //}
         }
