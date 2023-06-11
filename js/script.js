@@ -39,7 +39,7 @@ function execCalc() {//event delegation to determine button clicked
 
 function determineSymbolFill(sym){
     //if sym === 'c' should be the very first if statement everything else should be else if
-    equalsJustCalled = false;
+    //equalsJustCalled = false;//not sure what this is doing here need to trace MIGHT NOT BE NEEDED
     if(sym === "c"){
         console.log(sym);
         wholeFunc = "";
@@ -85,10 +85,10 @@ function determineSymbolFill(sym){
             displayError();
         }
         if(wholeFunc === "SyntaxError"){//this should let the division by zero error message stay displayed on the screen
-            displayError();
+            displayError();//might be better to return this function from the equals function division by zero section instead of repeating this code here
         }
-        else if(wholeFunc === "ReallyBigNum"){
-            displayBigNumber();
+        else if(wholeFunc === "ReallyBigNum"){//if a really big number is reached in the equals function it is better to return the
+            displayBigNumber();//reallyBigNumber function to this location instead of repeating this code...maybe
         }
         else{
             if(sym != "="){
