@@ -106,7 +106,7 @@ function determineSymbolFill(sym){
             fnCheck = true;
             lastPress = "sym";
             currentNum = "";
-            equalsJustCalled = false;//if sym !== "="
+            //equalsJustCalled = false;//if sym !== "="
             //insert display function(append to display "screen")
             //}
         }
