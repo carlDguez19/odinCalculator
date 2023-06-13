@@ -8,12 +8,7 @@ let fnCheck =  false;
 let fnDotCheck = false;
 let snDotCheck = false;
 let equalsJustCalled = false;
-// const numRegex = '/^\d+$/'; this will be used as a last resort
-// const symbolRegex = /[+*.-]/;
-// fn = +fn + +sn;//testing unary operator
-// console.log(fn);
-// fn += "b";
-// fn += "pb";
+
 execCalc();
 
 function execCalc() {//event delegation to determine button clicked
@@ -38,8 +33,6 @@ function execCalc() {//event delegation to determine button clicked
 };
 
 function determineSymbolFill(sym){
-    //if sym === 'c' should be the very first if statement everything else should be else if
-    //equalsJustCalled = false;//not sure what this is doing here need to trace MIGHT NOT BE NEEDED
     if(sym === "c"){
         console.log(sym);
         wholeFunc = "";
@@ -50,6 +43,13 @@ function determineSymbolFill(sym){
         if(sym === "="){//if we try to press = after it was just pressed
             displayError();
         }else{//the code below can be placed in a function and used for the bottom piece of code
+            //insert code here same as below
+            if(sym != "="){
+                equalsJustCalled = false;//if sym !== "="
+            }
+            else{
+                equalsJustCalled = true;
+            }
             op = sym;
             wholeFunc += sym;
             currentNum = "";
@@ -118,7 +118,7 @@ function determineNumberFill(num){
         clearCalc();
         equalsJustCalled = false;
     }
-    if(fnCheck == true){
+    if(fnCheck == true){//if first number is finished being entered
         if((lastPress == "." && num == ".")|| (snDotCheck && num == ".")){//wont allow consecutive '.' presses
             displayError();
         }
@@ -151,10 +151,6 @@ function determineNumberFill(num){
             }
         }
     }
-    // if(fn === ""){
-    //     fn = num;
-    //     lastPress = num;
-    // }
 };
 
 function equals(){
@@ -165,38 +161,33 @@ function equals(){
             sn = "";
             decimalOrBigNum();
             console.log(fn);//current to be displayed
-            //display fn as current and append to full arithFunc to display on top left
             break;
         case "-":
             fn = fn - sn;
             sn = "";
             decimalOrBigNum();
             console.log(fn);//current to be displayed
-            //display fn as current and append to full arithFunc to display on top left
             break;
         case "*":
             fn = fn * sn;
             sn = "";
             decimalOrBigNum();
             console.log(fn);//current to be displayed
-            //display fn as current and append to full arithFunc to display on top left
             break;
         case "/":
             fn = fn / sn;
             if(sn == "0"){
-                displayError();
+                return displayError();
             }
             decimalOrBigNum();
             sn = "";
             console.log(fn);//current to be displayed
-            //display fn as current and append to full arithFunc to display on top left
             break;
         case "^":
             fn = fn ** sn;
             sn = "";
             decimalOrBigNum();
             console.log(fn);//current to be displayed
-            //display fn as current and append to full arithFunc to display on top left
             break;
     }
 }
@@ -272,23 +263,3 @@ function displayNumToString(num){
     displayWhole();//this will display whole function
     displayCurrent();
 }
-
-// function checkIfNum(num){//test to make sure that the e.target.dataset.value can be passed as a param
-//     if(!isNaN(num)){
-//         console.log("numbah govnah!!!");
-//     }
-//     else{
-//         console.log("symbul govnah!!!");
-//     }
-// }
-
-//else if(op && !isNaN(lastPress)){//chained operation eg 1+2*3-4/5 clear has be able to be called after another symbol
-    // if(sym === "="){//this else if wont work for clear ie 'c'
-    //     console.log(`${sym} in the right direction`);
-    //     equals();//you do NOT clear calculator..you need to see the result
-    //     wholeFunc += "=";
-    //     currentNum = fn;
-    //     displayWhole();
-    //     displayCurrent();
-    //     //display full arithmetic function with result
-    // }
