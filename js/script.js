@@ -1,3 +1,17 @@
+// ===============================
+// Calculator State
+// ===============================
+
+// fn = first number entered
+// sn = second number entered
+// op = current operator (+, -, *, /, ^)
+// wholeFunc = full expression shown on the top display
+// currentNum = number shown on the main display
+// lastPress = tracks last input to prevent invalid sequences (e.g., "..")
+// fnCheck = false → entering first number, true → entering second number
+// fnDotCheck / snDotCheck = prevent multiple decimals in a number
+// equalsJustCalled = tracks whether "=" was just pressed to reset state correctly
+
 let fn = "";
 let sn = "";
 let op = "";
@@ -9,47 +23,56 @@ let fnDotCheck = false;
 let snDotCheck = false;
 let equalsJustCalled = false;
 
+//Initialize calculator
 execCalc();
 
-function execCalc() {//event delegation to determine button clicked
+// ===============================
+// Event Delegation for Button Clicks
+// ===============================
+
+function execCalc() {
     let buttons = document.querySelector(".buttonFrame");
 
     buttons.addEventListener('click', (e) => {
         if(e.target.tagName === 'DIV'){
-            //console.log(e.target.dataset.value);
-            //checkIfNum(e.target.dataset.value);
-            if(!isNaN(e.target.dataset.value) || e.target.dataset.value == "."){//check if it is a number that is being clicked
-                //console.log("its a number");
-                // here i will determine if firstNumber(fn) or secondNumber(sn) needs to be filled
+
+            //Number or decimal
+            if(!isNaN(e.target.dataset.value) || e.target.dataset.value == "."){
                 determineNumberFill(e.target.dataset.value);
             }
+            //Operator or control symbol
             else{
-                //console.log("its a symbol");
                 determineSymbolFill(e.target.dataset.value);
-                //here i will determine if it is the first symbol that is clicked or the second, third, etc.
             }
         }
     })
 };
 
+// ===============================
+// Handle Operator / Symbol Input
+// ===============================
+
 function determineSymbolFill(sym){
+
+    //Clear calculator
     if(sym === "c"){
         console.log(sym);
         wholeFunc = "";
         clearCalc();
     }
-    else if(op === "="){//doing operations after pressing = without clearing calc
-        //enter to do operation after pressing equals sign
-        if(sym === "="){//if we try to press = after it was just pressed
-            displayError();
-        }else{//the code below can be placed in a function and used for the bottom piece of code
-            //insert code here same as below
+
+    // If "=" was just pressed, allow chaining new operations
+    else if(op === "="){
+        if(sym === "="){
+            displayError(); // pressing "=" twice is invalid
+        }else{
             if(sym != "="){
                 equalsJustCalled = false;//if sym !== "="
             }
             else{
                 equalsJustCalled = true;
             }
+            //Begin new operation after equals
             op = sym;
             wholeFunc += sym;
             currentNum = "";
@@ -59,14 +82,12 @@ function determineSymbolFill(sym){
             console.log(op);
         }
     }
-    else if(op === "" && !isNaN(lastPress)){//first time symbol is pressed
-        //if(wholeFunc === "ReallyBigNum"){displayBigNum()}
-        //else if(wholeFunc === "SyntaxError"){displayError()}
-        //VVV that if becomes else if
-        if(sym === "="){//if no operator has been chosen first 'operator' cannot be '='
+    // First operator press (after entering first number)
+    else if(op === "" && !isNaN(lastPress)){
+        if(sym === "="){//cannot start with '='
             displayError();
         }
-        else{//the code below can be placed in a function and used for the top piece of code
+        else{
             op = sym;
             wholeFunc += sym;
             currentNum = "";
@@ -77,18 +98,17 @@ function determineSymbolFill(sym){
             //insert display function(append to display "screen")
         }
     }
-    else if(op && !isNaN(lastPress)){//chained operation eg 1+2*3-4/5 clear has be able to be called after another symbol
-        //else{
-        //second symbol then clear wholeFunc and set append fn to 'new' fn
-        equals();
+    //chained operation eg 1+2*3-4/5
+    else if(op && !isNaN(lastPress)){
+        equals(); //compute previous operation
         if(fn == NaN){//handle any weird error
             displayError();
         }
         if(wholeFunc === "SyntaxError"){//this should let the division by zero error message stay displayed on the screen
             displayError();//might be better to return this function from the equals function division by zero section instead of repeating this code here
         }
-        else if(wholeFunc === "ReallyBigNum"){//if a really big number is reached in the equals function it is better to return the
-            displayBigNumber();//reallyBigNumber function to this location instead of repeating this code...maybe
+        else if(wholeFunc === "ReallyBigNum"){
+            displayBigNumber();
         }
         else{
             if(sym != "="){
@@ -106,20 +126,25 @@ function determineSymbolFill(sym){
             fnCheck = true;
             lastPress = "sym";
             currentNum = "";
-            //equalsJustCalled = false;//if sym !== "="
-            //insert display function(append to display "screen")
-            //}
         }
     }
 }
 
+// ===============================
+// Handle Number Input
+// ===============================
+
 function determineNumberFill(num){
-    if(equalsJustCalled == true){//if user presses number right after pressing equals it clears calc and starts new operation
+
+    //If equals was just pressed, start a new calculation
+    if(equalsJustCalled == true){
         clearCalc();
         equalsJustCalled = false;
     }
-    if(fnCheck == true){//if first number is finished being entered
-        if((lastPress == "." && num == ".")|| (snDotCheck && num == ".")){//wont allow consecutive '.' presses
+
+    //Entering second number
+    if(fnCheck == true){
+        if((lastPress == "." && num == ".")|| (snDotCheck && num == ".")){
             displayError();
         }
         else{
@@ -133,7 +158,9 @@ function determineNumberFill(num){
         }
     }
     else{
-        if(wholeFunc === "SyntaxError"){//if theres an error dont let calculator add numbers on top of error messages
+        
+        //entering first number
+        if(wholeFunc === "SyntaxError"){
             displayError();
         }
         else{
@@ -153,49 +180,54 @@ function determineNumberFill(num){
     }
 };
 
+// ===============================
+// Core Operation Logic
+// ===============================
+
 function equals(){
     equalsJustCalled = true;
     switch(op){
         case "+":
-            fn = +fn + +sn;//unary operator to do addition
+            fn = +fn + +sn;
             sn = "";
             decimalOrBigNum();
-            console.log(fn);//current to be displayed
             break;
         case "-":
             fn = fn - sn;
             sn = "";
             decimalOrBigNum();
-            console.log(fn);//current to be displayed
             break;
         case "*":
             fn = fn * sn;
             sn = "";
             decimalOrBigNum();
-            console.log(fn);//current to be displayed
             break;
         case "/":
             fn = fn / sn;
             if(sn == "0"){
-                return displayError();
+                return displayError(); //division by zero
             }
             decimalOrBigNum();
             sn = "";
-            console.log(fn);//current to be displayed
             break;
         case "^":
             fn = fn ** sn;
             sn = "";
             decimalOrBigNum();
-            console.log(fn);//current to be displayed
             break;
     }
 }
 
+// ===============================
+// Number Formatting & Limits
+// ===============================
+
+//check if number has decimals
 function isDecimal(num){
     return (num%1);
 }
 
+//Format decimals or detect overflow
 function decimalOrBigNum(){
     snDotCheck = false;
     if(isDecimal(fn)){
@@ -209,8 +241,12 @@ function decimalOrBigNum(){
     }
 }
 
+// ===============================
+// Reset & Error Handling
+// ===============================
+
 function clearCalc(){
-    lastPress = "";//arithmetic func complete reset everything
+    lastPress = "";
     fnCheck = false;
     op = "";
     fn = "";
@@ -239,6 +275,10 @@ function displayBigNumber(){
     displayWhole();
 }
 
+// ===============================
+// Display Helpers
+// ===============================
+
 function displayCurrent(){
     let currDisp = document.querySelector(".current");
     currDisp.textContent = currentNum;
@@ -260,6 +300,6 @@ function displayWhole(){
 function displayNumToString(num){
     wholeFunc += num.toString();
     currentNum += num.toString();
-    displayWhole();//this will display whole function
+    displayWhole();
     displayCurrent();
 }
